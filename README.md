@@ -3,9 +3,13 @@ This module deploys MLFlow app on App Engine Flex with IAP authorization.
 
 ## Installation
 Follow the related blog post on GetInData's official site:
-[link]()
+[https://getindata.com/blog/deploying-mlflow-google-cloud-platform-using-app-engine/](https://getindata.com/blog/deploying-mlflow-google-cloud-platform-using-app-engine/)
 
-### Using service accounts with IAP
+## Authorizing to MLFlow via IAP
+### As a user
+Users need to have `IAP-secured Web App User` role in the project or on the specific IAP resource level. 
+
+### As a service account
 #### Using bash
 1. Service account needs to have the following roles:
    1. `IAP-secured Web App User`
