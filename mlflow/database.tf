@@ -77,7 +77,8 @@ resource "google_secret_manager_secret_version" "mlflow_db_password_secret" {
 }
 
 resource "google_secret_manager_secret_iam_member" "mlflow_db_password_secret_iam" {
-  depends_on = [google_secret_manager_secret.mlflow_db_password_secret, google_app_engine_application.mlflow_app]
+//  depends_on = [google_secret_manager_secret.mlflow_db_password_secret, google_app_engine_application.mlflow_app]
+  depends_on = [google_secret_manager_secret.mlflow_db_password_secret]
   secret_id  = google_secret_manager_secret.mlflow_db_password_secret.id
   role       = "roles/secretmanager.secretAccessor"
   for_each = toset(["serviceAccount:${data.google_project.project.number}-compute@developer.gserviceaccount.com",

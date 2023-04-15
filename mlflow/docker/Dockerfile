@@ -1,5 +1,5 @@
-FROM google/cloud-sdk:385.0.0
-ARG MLFLOW_VERSION="1.26.0"
+FROM google/cloud-sdk:426.0.0
+ARG MLFLOW_VERSION="2.2.2"
 
 ENV LC_ALL=C.UTF-8
 ENV LANG=C.UTF-8

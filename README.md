@@ -42,3 +42,11 @@ result = requests.get("https://<link to app>.appspot.com/api/2.0/mlflow/experime
                      headers={"Authorization": f"Bearer {token}"})
 print(result.json())
 ```
+
+## Testing gateway
+```bash
+TOKEN=$(gcloud auth application-default print-access-token)
+GW=https://kedro-snowflake-mlflow-gateway-dev-dhegcxn.nw.gateway.dev
+curl --silent --header "Authorization: Bearer ${TOKEN}" "${GW}/api/2.0/mlflow/experiments/get-by-name?experiment_name=default" | jq '.'
+
+```

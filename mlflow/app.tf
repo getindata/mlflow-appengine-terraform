@@ -29,20 +29,26 @@ locals {
       }
     ]
   ]))
+
+  app_url = "${var.prefix}-default-dot-${var.project}.nw.r.appspot.com"
 }
 
-resource "google_app_engine_application" "mlflow_app" {
-  project     = var.project
-  location_id = var.app_engine_region
-  iap {
-    enabled              = true
-    oauth2_client_id     = data.google_secret_manager_secret_version.oauth_client_id.secret_data
-    oauth2_client_secret = data.google_secret_manager_secret_version.oauth_client_secret.secret_data
-  }
-}
+//resource "google_app_engine_application" "mlflow_app" {
+//  project     = var.project
+//  location_id = var.app_engine_region
+//  iap {
+//    enabled              = true
+//    oauth2_client_id     = data.google_secret_manager_secret_version.oauth_client_id.secret_data
+//    oauth2_client_secret = data.google_secret_manager_secret_version.oauth_client_secret.secret_data
+//  }
+//}
+
+
+//data "google_app_engine_default_service_account" "default" {
+//}
 
 resource "google_project_iam_member" "mlflow_gae_iam" {
-  depends_on = [google_app_engine_application.mlflow_app]
+//  depends_on = [google_app_engine_application.mlflow_app]
   for_each   = { for entry in local.gae_sa_iam : "${entry.sa}.${entry.role}" => entry }
   project    = var.project
   role       = each.value.role
@@ -52,7 +58,7 @@ resource "google_project_iam_member" "mlflow_gae_iam" {
 
 resource "google_app_engine_flexible_app_version" "mlflow_default_app" {
   project    = var.project
-  service    = "default"
+  service    = "${var.prefix}-default"
   version_id = "v1"
   runtime    = "custom"
 
@@ -68,6 +74,7 @@ resource "google_app_engine_flexible_app_version" "mlflow_default_app" {
 
   readiness_check {
     path = "/"
+    app_start_timeout = "900s"
   }
 
   beta_settings = {
