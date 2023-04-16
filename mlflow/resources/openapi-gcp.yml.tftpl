@@ -91,6 +91,28 @@ paths:
           schema:
             "$ref": "#/definitions/CreateExperimentRequest"
 
+  /api/2.0/mlflow/runs/get:
+    get:
+      tags:
+        - Runs
+      description: |-
+        Get metadata, metrics, params, and tags for a run. In the case where multiple metrics with the same key are logged for a run, return only  the value with the latest timestamp.
+        If there are multiple values with the latest timestamp, return the maximum of these values.
+      operationId: runs.Get
+      x-google-backend:
+        address: https://${app_url}/api/2.0/mlflow/runs/get
+        jwt_audience: ${iap_client_id}
+      parameters:
+        - description: ID of the run to fetch. Must be provided.
+          in: query
+          name: run_id
+          required: false
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            "$ref": "#/definitions/GetRunResponse"
 
   /api/2.0/mlflow/runs/create:
     post:

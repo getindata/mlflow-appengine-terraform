@@ -35,3 +35,7 @@ variable "availability_type" {
   default = "ZONAL"
 }
 
+variable "snowflake_service_account" {
+  type = string
+}
+

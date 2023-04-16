@@ -6,6 +6,8 @@ BACKEND_URI=${BACKEND_URI:-"mysql+pymysql://${DB_USERNAME}:${DB_PASSWORD}@/${DB_
 
 mlflow server \
   --backend-store-uri ${BACKEND_URI} \
-  --default-artifact-root ${GCS_BACKEND} \
+  --default-artifact-root mlflow-artifacts:/ \
+  --artifacts-destination ${GCS_BACKEND} \
+  --serve-artifacts \
   --host 0.0.0.0 \
   --port ${PORT}
